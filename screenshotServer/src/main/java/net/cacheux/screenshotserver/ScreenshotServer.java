@@ -162,7 +162,10 @@ public class ScreenshotServer {
 					ByteBuffer buffer = ByteBuffer.allocate(bufferSize);
 //					bitmap.copy(Bitmap.Config.RGB_565, true).copyPixelsToBuffer(buffer);
 					bitmap.copy(Bitmap.Config.ARGB_8888, true).copyPixelsToBuffer(buffer);
-					out.write(intToBigEndian(bufferSize));
+					out.write(intToBigEndian(bufferSize + 12));
+					out.write(intToBigEndian(width));
+					out.write(intToBigEndian(height));
+					out.write(intToBigEndian(BYTES_PER_PIXEL));
 					out.write(buffer.array());
 					Log.d(TAG, "compress done:" + System.nanoTime());
 					if (in.read(b) < 0)
